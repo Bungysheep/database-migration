@@ -1,0 +1,24 @@
+sudo: required
+
+branches:
+  only:
+  - master
+
+services:
+- docker
+
+before_install:
+# Build test image
+- docker build -t jamese/database-migration-test .
+
+script:
+# Run unit test
+- docker run jamese/database-migration-test go test -short -v ./...
+
+after_success:
+# Build images
+- docker build -t jamese/database-migration:latest .
+# Login to docker
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# Push latest image to docker hub
+- docker push jamese/database-migration:latest
