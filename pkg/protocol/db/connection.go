@@ -10,7 +10,7 @@ import (
 
 // OpenDbConn opens connection to postgres database
 func OpenDbConn() (*sql.DB, error) {
-	log.Printf("Database connection is opening...")
+	log.Printf("Open database connection...")
 
 	connStr := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s", config.PGHOST, config.PGPORT, config.PGDATABASE, config.PGUSER, config.PGPASSWORD, config.PGSSLMODE)
 
