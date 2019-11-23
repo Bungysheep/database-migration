@@ -2,14 +2,16 @@ package migration
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/bungysheep/database-migration/pkg/config"
+	"github.com/bungysheep/database-migration/pkg/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
-// SOURCE_URL - File source url
-const SOURCE_URL = "file://./migrations"
+// SOURCEURL - File source url
+const SOURCEURL = "file://./migrations"
 
 // IMigration - Migration service interface
 type IMigration interface {
@@ -24,15 +26,21 @@ type migrationService struct {
 
 // NewMigration - Migration service implementation
 func NewMigration(db *sql.DB) (IMigration, error) {
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	logger.Log.Info("Creating postgres driver\n")
+
+	driver, err := postgres.WithInstance(db, &postgres.Config{DatabaseName: config.PGDATABASE})
 	if err != nil {
 		return nil, err
 	}
 
-	m, err := migrate.NewWithDatabaseInstance(SOURCE_URL, config.PGDATABASE, driver)
+	logger.Log.Info("Opening source\n")
+
+	m, err := migrate.NewWithDatabaseInstance(SOURCEURL, config.PGDATABASE, driver)
 	if err != nil {
 		return nil, err
 	}
+
+	m.Log = &migrationLog{}
 
 	return &migrationService{migrate: m}, nil
 }
@@ -65,4 +73,14 @@ func (ms *migrationService) Close() error {
 	}
 
 	return nil
+}
+
+type migrationLog struct{}
+
+func (ml *migrationLog) Printf(format string, args ...interface{}) {
+	logger.Log.Info(fmt.Sprintf(format, args...))
+}
+
+func (ml *migrationLog) Verbose() bool {
+	return true
 }
