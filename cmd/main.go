@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/bungysheep/database-migration/pkg/logger"
 	"github.com/bungysheep/database-migration/pkg/protocol/db"
 	"github.com/bungysheep/database-migration/pkg/service/migration"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -18,7 +19,11 @@ func main() {
 }
 
 func runMigration() error {
-	log.Printf("Open migration...")
+	if err := logger.InitLog(); err != nil {
+		return err
+	}
+
+	logger.Log.Info("Starting database migration\n")
 
 	db, err := db.OpenDbConn()
 	if err != nil {
@@ -34,8 +39,9 @@ func runMigration() error {
 		return err
 	}
 
-	log.Printf("Close migration...")
 	migrationService.Close()
+
+	logger.Log.Info("End of database migration\n")
 
 	return nil
 }
