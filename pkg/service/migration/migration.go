@@ -17,6 +17,7 @@ const SOURCEURL = "file://./migrations"
 type IMigration interface {
 	Up() error
 	Down() error
+	Drop() error
 	Close() error
 }
 
@@ -55,6 +56,14 @@ func (ms *migrationService) Up() error {
 
 func (ms *migrationService) Down() error {
 	if err := ms.migrate.Down(); err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+
+	return nil
+}
+
+func (ms *migrationService) Drop() error {
+	if err := ms.migrate.Drop(); err != nil && err != migrate.ErrNoChange {
 		return err
 	}
 
