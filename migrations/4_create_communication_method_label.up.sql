@@ -20,4 +20,6 @@ INSERT INTO communication_method_label (contact_system_code, communication_metho
 ('$DEFAULT', 'MOBILE', 'PERSONAL', 'Personal'),
 ('$DEFAULT', 'MOBILE', 'WORK', 'Work'),
 ('$DEFAULT', 'EMAIL', 'PERSONAL', 'Personal'),
-('$DEFAULT', 'EMAIL', 'WORK', 'Work');
+('$DEFAULT', 'EMAIL', 'WORK', 'Work'),
+('$DEFAULT', 'ADDRESS', 'WORK', 'Work'),
+('$DEFAULT', 'ADDRESS', 'HOME', 'Home');

@@ -9,7 +9,7 @@ CREATE TABLE communication_method (
 	modified_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	vers integer NULL,
 	CONSTRAINT communication_method_pk PRIMARY KEY (communication_method_code),
-	CONSTRAINT communication_method_fk FOREIGN KEY (contact_system_code) REFERENCES contact_system(contact_system_code) ON DELETE CASCADE
+	CONSTRAINT communication_method_contact_system_fk FOREIGN KEY (contact_system_code) REFERENCES contact_system(contact_system_code) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX communication_method_idx1 ON communication_method (contact_system_code, communication_method_code);
 
@@ -27,4 +27,5 @@ COMMENT ON COLUMN communication_method.vers IS 'Vers';
 INSERT INTO communication_method (contact_system_code, communication_method_code, description, details, status, format_field, vers) VALUES 
 ('$DEFAULT', 'PHONE', 'Phone', 'Phone', 'A', '[PHONE_NO]', 1),
 ('$DEFAULT', 'MOBILE', 'Mobile', 'Mobile', 'A', '[MOBILE_NO]', 1),
-('$DEFAULT', 'EMAIL', 'Email', 'Email', 'A', '[EMAIL_ADDRESS]', 1);
+('$DEFAULT', 'EMAIL', 'Email', 'Email', 'A', '[EMAIL_ADDRESS]', 1),
+('$DEFAULT', 'ADDRESS', 'Address', 'Address', 'A', '[STREET1] [STREET2] [STREET3], [CITY] - [POSTCODE], [COUNTRY]', 1);;

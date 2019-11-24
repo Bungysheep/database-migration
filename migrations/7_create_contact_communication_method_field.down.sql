@@ -1,0 +1,1 @@
+DROP TABLE contact_communication_method_field;

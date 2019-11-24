@@ -26,4 +26,10 @@ COMMENT ON COLUMN communication_method_field.vers IS 'Vers';
 INSERT INTO communication_method_field (contact_system_code, communication_method_code, field_code, caption, sequence, vers) VALUES 
 ('$DEFAULT', 'PHONE', 'PHONE_NO', 'Phone', 1, 1),
 ('$DEFAULT', 'MOBILE', 'MOBILE_NO', 'Mobile', 1, 1),
-('$DEFAULT', 'EMAIL', 'EMAIL_ADDRESS', 'Email', 1, 1);
+('$DEFAULT', 'EMAIL', 'EMAIL_ADDRESS', 'Email', 1, 1),
+('$DEFAULT', 'ADDRESS', 'STREET1', 'Street 1', 1, 1),
+('$DEFAULT', 'ADDRESS', 'STREET2', 'Street 2', 2, 1),
+('$DEFAULT', 'ADDRESS', 'STREET3', 'Street 3', 3, 1),
+('$DEFAULT', 'ADDRESS', 'CITY', 'City', 4, 1),
+('$DEFAULT', 'ADDRESS', 'POSTCODE', 'Postcode', 5, 1),
+('$DEFAULT', 'ADDRESS', 'COUNTRY', 'Country', 6, 1);
