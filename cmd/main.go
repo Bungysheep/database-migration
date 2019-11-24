@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 
@@ -19,6 +20,10 @@ func main() {
 }
 
 func runMigration() error {
+	action := flag.String("action", "up", "Migration Action ('up', 'down', or 'drop')")
+
+	flag.Parse()
+
 	if err := logger.InitLog(); err != nil {
 		return err
 	}
@@ -35,8 +40,19 @@ func runMigration() error {
 		return err
 	}
 
-	if err := migrationService.Up(); err != nil {
-		return err
+	switch *action {
+	case "up":
+		if err := migrationService.Up(); err != nil {
+			return err
+		}
+	case "down":
+		if err := migrationService.Down(); err != nil {
+			return err
+		}
+	case "drop":
+		if err := migrationService.Drop(); err != nil {
+			return err
+		}
 	}
 
 	migrationService.Close()
